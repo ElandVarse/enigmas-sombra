@@ -1,12 +1,25 @@
 import { Text, View } from 'react-native'
 import React, { Component } from 'react'
+import { TextInput } from 'react-native-gesture-handler'
+import styles from '../assets/style';
 
-export default class question extends Component {
-  render() {
+
+const question = () => {
+  const [text, onChangeText] = React.useState('');
     return (
-      <View>
-        <Text>question</Text>
+      <View style={styles.container}>
+
+        <View style={styles.suggestionBox}>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder="Exemplo..."
+          />
+        </View>
+
       </View>
     )
   }
-}
+
+  export default question;
