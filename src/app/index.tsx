@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import QuestionMark from '@/assets/images/question-mark';
+import { Link, Stack } from 'expo-router';
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
@@ -8,27 +9,29 @@ const Index = () => {
 
   return (
     <View style={styles.container}>
+
       <View style={styles.questionMark}>
         <QuestionMark width={90} height={90} />
       </View>
 
       <View style={styles.suggestionBox}>
+
         <Text style={styles.title}>Enigma Sombra</Text>
 
         <TouchableOpacity style={styles.suggestionButton} >
-          <Text style={styles.suggestionButtonText}>Iniciar</Text>
+          <Link style={styles.suggestionButtonText} href={"/question"}>Iniciar</Link>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.suggestionButton}>
-          <Text style={styles.suggestionButtonText}>Fases</Text>
+          <Link style={styles.suggestionButtonText} href={"/phases"}>Fases</Link>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.suggestionButton}>
-          <Text style={styles.suggestionButtonText}>Instruções</Text>
+          <Link style={styles.suggestionButtonText} href={"/instructions"}>Instruções</Link>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.suggestionButton}>
-          <Text style={styles.suggestionButtonText}>Opções</Text>
+          <Link style={styles.suggestionButtonText} href={"/options"}>Options</Link>
         </TouchableOpacity>
       </View>
 
@@ -88,12 +91,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 12,
     borderRadius: 4,
-    backgroundColor: '#8F6A35',
     marginBottom: 8,
-    borderBottomWidth: 8,
-    borderBottomColor: '#3A3329',
-    borderRightWidth: 8,
-    borderRightColor: '#645136'
+    borderBottomWidth: 2,
+    borderBottomColor: '#ffffff',
+
   },
   suggestionButtonText: {
     color: 'white',
