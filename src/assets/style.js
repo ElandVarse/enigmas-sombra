@@ -3,7 +3,9 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     input: {
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      outlineStyle: 'none',
+      outline:'none'
     },
     marginBottom: {
       marginBottom: 8,
@@ -22,15 +24,27 @@ export const styles = StyleSheet.create({
       fontSize: 24,
     },
     questionMark: {
+      width: 150,
+      height: 150,
+      borderRadius: 75,
+      
+      elevation: 5,
+      shadowColor: '#000000',
+      shadowOffset: {
+        width: 8,
+        height: 8,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
       position: 'absolute',
       top: 24,
       backgroundColor: '#8F7535',
       padding: 24,
-      borderRadius: '50%',
       borderBottomWidth: 8,
       borderBottomColor: '#3A3329',
-      borderRightWidth: 8,
-      borderRightColor: '#645136'
+      borderLeftWidth: 8,
+      borderLeftColor: '#645136',
     },
     suggestionBox: {
       width: '80%',
@@ -73,4 +87,3 @@ export const styles = StyleSheet.create({
   });
 
   export default styles
-  

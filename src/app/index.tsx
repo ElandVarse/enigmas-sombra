@@ -21,7 +21,7 @@ const Index = () => {
         <Text style={styles.title}>Enigma Sombra</Text>
 
         <TouchableOpacity style={styles.suggestionButton} >
-          <Link style={styles.suggestionButtonText} href={"/question"}>Iniciar</Link>
+          <Link style={styles.suggestionButtonText} href={"/puzzle"}>Iniciar</Link>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.suggestionButton}>

@@ -7,7 +7,7 @@ const QuestionMark = (props: any) => (
     xmlSpace="preserve"
     width={800}
     height={800}
-    fill= '#111'
+    fill= '#111111aa'
     viewBox="0 0 512 512"
     {...props}
     
