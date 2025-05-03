@@ -1,39 +1,63 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { Component } from 'react'
-import { TextInput } from 'react-native-gesture-handler'
+import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { TextInput } from 'react-native-gesture-handler';
 import { styles } from '../assets/style';
-import { Link } from 'expo-router';
-import { puzzle1, puzzle2, puzzle3 } from '../assets/puzzles';
 
 const question = () => {
-  const [text, onChangeText] = React.useState('');
+  const puzzles = [
+    { question: 'O que é, o que é: cai em pé e corre deitado?', answer: 'Chuva' },
+    { question: 'O que é, o que é: tem dentes mas não morde?', answer: 'Pente' },
+    { question: 'O que é, o que é: quanto mais tira, maior fica?', answer: 'Buraco' },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [text, setText] = useState('');
+
+  const checkAnswer = () => {
+    const userAnswer = text.trim().toLowerCase();
+    const correctAnswer = puzzles[currentIndex].answer.trim().toLowerCase();
+
+    if (userAnswer === correctAnswer) {
+      if (currentIndex < puzzles.length - 1) {
+        Alert.alert('Certa resposta!', 'Próximo enigma...');
+        setText('');
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        Alert.alert('Parabéns!', 'Você completou todos os enigmas!');
+        setText('');
+        setCurrentIndex(0); // ou finalizar o jogo
+      }
+    } else {
+      Alert.alert('ERRADO', 'Tente novamente.');
+    }
+  };
+
   return (
     <View style={styles.container}>
-
       <Text style={styles.title}>Enigma Sombra</Text>
 
       <View style={styleQuestion.puzzle}>
-        <Text style={styles.suggestMeText}>{puzzle1.question}</Text>
+        <Text style={styles.suggestMeText}>
+          {puzzles[currentIndex].question}
+        </Text>
       </View>
 
       <View style={styles.suggestionBox}>
         <TextInput
           style={styleQuestion.input}
-          onChangeText={onChangeText}
+          onChangeText={setText}
           value={text}
-          placeholder="Exemplo..." 
+          placeholder="Digite sua resposta..."
           placeholderTextColor="#888"
         />
 
-        <TouchableOpacity style={styleQuestion.button} onPress={() => alert('Botão custom!')}>
+        <TouchableOpacity style={styleQuestion.button} onPress={checkAnswer}>
           <Text style={styleQuestion.buttonText}>Enviar</Text>
         </TouchableOpacity>
-
       </View>
-
     </View>
-  )
-}
+  );
+};
 
 const styleQuestion = StyleSheet.create({
   container: {
@@ -54,25 +78,18 @@ const styleQuestion = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     color: '#ffffff',
-    outline: 'none',
-    outlineStyle: 'none'
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    outline: 'none',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    textAlign: 'center',
   },
   puzzle: {
     borderRadius: 8,
     marginBottom: 20,
   },
-
-
 });
 
 export default question;
