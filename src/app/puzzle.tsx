@@ -2,12 +2,20 @@ import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import { styles } from '../assets/style';
+import { Link } from 'expo-router';
 
 const question = () => {
   const puzzles = [
-    { question: 'O que é, o que é: cai em pé e corre deitado?', answer: 'Chuva' },
-    { question: 'O que é, o que é: tem dentes mas não morde?', answer: 'Pente' },
-    { question: 'O que é, o que é: quanto mais tira, maior fica?', answer: 'Buraco' },
+    { id: 1, question: 'O que é, o que é: Cai em pé e corre deitado?', answer: 'A chuva' },
+    { id: 2, question: 'Tem dentes mas não morde?', answer: 'O pente' },
+    { id: 3, question: 'Anda com os pés na cabeça?', answer: 'O piolho' },
+    { id: 4, question: 'Tem capa mas não é super-herói?', answer: 'O livro' },
+    { id: 5, question: 'Quanto mais tira, maior fica?', answer: 'Buraco' },
+    { id: 6, question: 'Qual é o animal que anda com um pau nas costas?', answer: 'O caramujo' },
+    { id: 7, question: 'O que é invisível e atrapalha a visão?', answer: 'A escuridão' },
+    { id: 8, question: 'Sempre molhado, mesmo secando?', answer: 'Toalha' },
+    { id: 9, question: 'O que nasce grande e morre pequeno?', answer: 'O lápis' },
+    { id: 10, question: 'Tem banco, mas não senta?', answer: 'O banco de dados' },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -54,6 +62,11 @@ const question = () => {
         <TouchableOpacity style={styleQuestion.button} onPress={checkAnswer}>
           <Text style={styleQuestion.buttonText}>Enviar</Text>
         </TouchableOpacity>
+
+
+        <TouchableOpacity style={styleQuestion.back}>
+            <Link href="/" style={{ color: '#ff9800', fontSize: 16 }}>← Voltar</Link>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -63,6 +76,12 @@ const styleQuestion = StyleSheet.create({
   container: {
     marginTop: 50,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  back: {
+    marginTop: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: '#8F7535',
