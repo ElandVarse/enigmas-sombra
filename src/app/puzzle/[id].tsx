@@ -10,16 +10,16 @@ const PuzzleScreen = () => {
   const puzzleId = parseInt(id); // vem como string
 
   const puzzles = [
-    { id: 1, question: 'O que é, o que é: Cai em pé e corre deitado?', answer: 'A chuva' },
-    { id: 2, question: 'Tem dentes mas não morde?', answer: 'O pente' },
-    { id: 3, question: 'Anda com os pés na cabeça?', answer: 'O piolho' },
-    { id: 4, question: 'Tem capa mas não é super-herói?', answer: 'O livro' },
+    { id: 1, question: 'O que é, o que é: Cai em pé e corre deitado?', answer: 'Chuva' },
+    { id: 2, question: 'Tem dentes mas não morde?', answer: 'Pente' },
+    { id: 3, question: 'Anda com os pés na cabeça?', answer: 'Piolho' },
+    { id: 4, question: 'Tem capa mas não é super-herói?', answer: 'Livro' },
     { id: 5, question: 'Quanto mais tira, maior fica?', answer: 'Buraco' },
-    { id: 6, question: 'Qual é o animal que anda com um pau nas costas?', answer: 'O caramujo' },
-    { id: 7, question: 'O que é invisível e atrapalha a visão?', answer: 'A escuridão' },
+    { id: 6, question: 'Qual é o animal que anda com um pau nas costas?', answer: 'Caramujo' },
+    { id: 7, question: 'O que é invisível e atrapalha a visão?', answer: 'Escuridão' },
     { id: 8, question: 'Sempre molhado, mesmo secando?', answer: 'Toalha' },
-    { id: 9, question: 'O que nasce grande e morre pequeno?', answer: 'O lápis' },
-    { id: 10, question: 'Tem banco, mas não senta?', answer: 'O banco de dados' },
+    { id: 9, question: 'O que nasce grande e morre pequeno?', answer: 'Lapis' },
+    { id: 10, question: 'Tem banco, mas não senta?', answer: 'Banco de dados' },
   ];
 
   const puzzle = puzzles.find(p => p.id === puzzleId);
