@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import QuestionMark from '@/assets/images/question-mark';
-import { Link, Stack } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import {styles} from '../app/../assets/style'
 
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
   const [suggestion, setSuggestion] = useState("")
+  const router = useRouter();
 
   return (
+
     <View style={styles.container}>
 
       <View style={styles.questionMark}>
@@ -20,16 +22,16 @@ const Index = () => {
 
         <Text style={styles.title}>Enigma Sombra</Text>
 
-        <TouchableOpacity style={styles.suggestionButton} >
-          <Link style={styles.suggestionButtonText} href={"/puzzle"}>Iniciar</Link>
+        <TouchableOpacity onPress={() => router.push('/puzzle/1')} style={styles.suggestionButton} >
+          <Text style={styles.suggestionButtonText}>Iniciar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.suggestionButton}>
-          <Link style={styles.suggestionButtonText} href={"/phases"}>Fases</Link>
+        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/stages')}>
+          <Text style={styles.suggestionButtonText}>Fases</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.suggestionButton}>
-          <Link style={styles.suggestionButtonText} href={"/instructions"}>Instruções</Link>
+        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/instructions')}>
+          <Text style={styles.suggestionButtonText}>Instruções</Text>
         </TouchableOpacity>
       </View>
 

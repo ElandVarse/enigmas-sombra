@@ -1,10 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
-import { styles } from '../assets/style';
-import { Link } from 'expo-router';
+import { styles } from '../../assets/style';
+import { Link, useLocalSearchParams, useRouter } from 'expo-router';
 
-const question = () => {
+const PuzzleScreen = () => {
+  const { id } = useLocalSearchParams();
+  const router = useRouter();
+  const puzzleId = parseInt(id); // vem como string
+
   const puzzles = [
     { id: 1, question: 'O que é, o que é: Cai em pé e corre deitado?', answer: 'A chuva' },
     { id: 2, question: 'Tem dentes mas não morde?', answer: 'O pente' },
@@ -18,22 +22,32 @@ const question = () => {
     { id: 10, question: 'Tem banco, mas não senta?', answer: 'O banco de dados' },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const puzzle = puzzles.find(p => p.id === puzzleId);
   const [text, setText] = useState('');
+
+  if (!puzzle) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Enigma não encontrado 😢</Text>
+        <Link href="/" style={{ color: '#ffffff' }}>← Voltar</Link>
+      </View>
+    );
+  }
 
   const checkAnswer = () => {
     const userAnswer = text.trim().toLowerCase();
-    const correctAnswer = puzzles[currentIndex].answer.trim().toLowerCase();
+    const correctAnswer = puzzle.answer.trim().toLowerCase();
 
     if (userAnswer === correctAnswer) {
-      if (currentIndex < puzzles.length - 1) {
-        Alert.alert('Certa resposta!', 'Próximo enigma...');
-        setText('');
-        setCurrentIndex(currentIndex + 1);
+      const nextId = puzzleId + 1;
+      const hasNext = puzzles.some(p => p.id === nextId);
+      Alert.alert('Certa resposta!', hasNext ? 'Indo para o próximo enigma...' : 'Você concluiu todos!');
+      setText('');
+
+      if (hasNext) {
+        router.push(`/puzzle/${nextId}`); // redireciona corretamente
       } else {
-        Alert.alert('Parabéns!', 'Você completou todos os enigmas!');
-        setText('');
-        setCurrentIndex(0); // ou finalizar o jogo
+        router.push('/'); // volta pro início
       }
     } else {
       Alert.alert('ERRADO', 'Tente novamente.');
@@ -45,9 +59,7 @@ const question = () => {
       <Text style={styles.title}>Enigma Sombra</Text>
 
       <View style={styleQuestion.puzzle}>
-        <Text style={styles.suggestMeText}>
-          {puzzles[currentIndex].question}
-        </Text>
+        <Text style={styles.suggestMeText}>{puzzle.question}</Text>
       </View>
 
       <View style={styles.suggestionBox}>
@@ -63,9 +75,8 @@ const question = () => {
           <Text style={styleQuestion.buttonText}>Enviar</Text>
         </TouchableOpacity>
 
-
         <TouchableOpacity style={styleQuestion.back}>
-            <Link href="/" style={{ color: '#ff9800', fontSize: 16 }}>← Voltar</Link>
+          <Link href="/" style={{ color: '#ffffff', fontSize: 16 }}>← Voltar</Link>
         </TouchableOpacity>
       </View>
     </View>
@@ -111,4 +122,4 @@ const styleQuestion = StyleSheet.create({
   },
 });
 
-export default question;
+export default PuzzleScreen;

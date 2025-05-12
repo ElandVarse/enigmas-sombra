@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
       shadowRadius: 3.84,
 
       position: 'absolute',
-      top: 24,
+      top: 90,
       backgroundColor: '#8F7535',
       padding: 24,
       borderBottomWidth: 8,
