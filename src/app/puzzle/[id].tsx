@@ -1,10 +1,34 @@
 import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import { styles } from '../../assets/style';
 import { Link, useLocalSearchParams, useRouter } from 'expo-router';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const PuzzleScreen = () => {
+  const [isAllowed, setIsAllowed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkProgress = async () => {
+      try {
+        const value = await AsyncStorage.getItem('maxPuzzle');
+        const maxUnlocked = value ? parseInt(value) : 1;
+
+        if (puzzleId <= maxUnlocked) {
+          setIsAllowed(true);
+        }
+      } catch (e) {
+        console.error('Erro ao verificar progresso:', e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkProgress();
+  }, []);
+
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const puzzleId = parseInt(id); // vem como string
@@ -25,16 +49,7 @@ const PuzzleScreen = () => {
   const puzzle = puzzles.find(p => p.id === puzzleId);
   const [text, setText] = useState('');
 
-  if (!puzzle) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Enigma não encontrado 😢</Text>
-        <Link href="/" style={{ color: '#ffffff' }}>← Voltar</Link>
-      </View>
-    );
-  }
-
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
     const userAnswer = text.trim().toLowerCase();
     const correctAnswer = puzzle.answer.trim().toLowerCase();
 
@@ -44,44 +59,81 @@ const PuzzleScreen = () => {
       Alert.alert('Certa resposta!', hasNext ? 'Indo para o próximo enigma...' : 'Você concluiu todos!');
       setText('');
 
+      try {
+        await AsyncStorage.setItem('maxPuzzle', String(nextId));
+      } catch (e) {
+        console.error('Erro ao salvar progresso:', e);
+      }
+
       if (hasNext) {
-        router.push(`/puzzle/${nextId}`); // redireciona corretamente
+        router.push(`/puzzle/${nextId}`);
       } else {
-        router.push('/'); // volta pro início
+        router.push('/');
       }
     } else {
       Alert.alert('ERRADO', 'Tente novamente.');
     }
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Carregando...</Text>
+      </View>
+    );
+  }
+
+
+  if (!puzzle) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Enigma não encontrado 😢</Text>
+        <Link href="/" style={{ color: '#ffffff' }}>← Voltar</Link>
+      </View>
+    );
+  }
+
+  if (!isAllowed) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>⛔<br /><br />Você não deveria estar aqui!</Text>
+        <TouchableOpacity>
+          <Link href="/" style={{ color: '#ffffff', fontSize: 16, marginTop: 24 }}>← Voltar</Link>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enigma Sombra</Text>
+      <>
+        <View style={styleQuestion.puzzle}>
+          <Text style={styles.suggestMeText}>{puzzle.question}</Text>
+        </View>
 
-      <View style={styleQuestion.puzzle}>
-        <Text style={styles.suggestMeText}>{puzzle.question}</Text>
-      </View>
+        <View style={styles.suggestionBox}>
+          <TextInput
+            style={styleQuestion.input}
+            onChangeText={setText}
+            value={text}
+            placeholder="Digite sua resposta..."
+            placeholderTextColor="#888"
+          />
 
-      <View style={styles.suggestionBox}>
-        <TextInput
-          style={styleQuestion.input}
-          onChangeText={setText}
-          value={text}
-          placeholder="Digite sua resposta..."
-          placeholderTextColor="#888"
-        />
+          <TouchableOpacity style={styleQuestion.button} onPress={checkAnswer}>
+            <Text style={styleQuestion.buttonText}>Enviar</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styleQuestion.button} onPress={checkAnswer}>
-          <Text style={styleQuestion.buttonText}>Enviar</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styleQuestion.back}>
-          <Link href="/" style={{ color: '#ffffff', fontSize: 16 }}>← Voltar</Link>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styleQuestion.back}>
+            <Link href="/" style={{ color: '#ffffff', fontSize: 16 }}>← Voltar</Link>
+          </TouchableOpacity>
+        </View>
+      </>
     </View>
   );
-};
+}
+
 
 const styleQuestion = StyleSheet.create({
   container: {
