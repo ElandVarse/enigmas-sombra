@@ -107,7 +107,6 @@ const PuzzleScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enigma Sombra</Text>
-      <>
         <View style={styleQuestion.puzzle}>
           <Text style={styles.suggestMeText}>{puzzle.question}</Text>
         </View>
