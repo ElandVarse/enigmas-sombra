@@ -125,11 +125,11 @@ const PuzzleScreen = () => {
             <Text style={styleQuestion.buttonText}>Enviar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styleQuestion.back}>
-            <Link href="/" style={{ color: '#ffffff', fontSize: 16 }}>← Voltar</Link>
-          </TouchableOpacity>
-        </View>
-      </>
+
+        <TouchableOpacity style={styleQuestion.back}>
+          <Link href="/" style={{ fontWeight: 'bold', color: '#ffffff', fontSize: 16, marginTop: 24 }}>{'<'} Voltar</Link>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
