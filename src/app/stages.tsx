@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native'
 import React, { Component } from 'react'
 import { Link, Stack } from 'expo-router';
+import styles from '../assets/style';
 
 const data = Array.from({ length: 9 }, (_, i) => (i + 1).toString());
 
@@ -43,7 +44,7 @@ export default function Phases() {
       </View>
 
       <TouchableOpacity>
-        <Link href="/" style={{ color: '#ffffff', fontSize: 16, marginTop: 24 }}>← Voltar</Link>
+        <Link href="/" style={{ fontWeight: 'bold', color: '#ffffff', fontSize: 16, marginTop: 24 }}>{'<'} Voltar</Link>
       </TouchableOpacity>
     </View>
   );
