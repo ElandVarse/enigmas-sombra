@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import { styles } from '../../assets/style';
 import { Link, useLocalSearchParams, useRouter } from 'expo-router';
+import puzzles from '../../assets/puzzles';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -31,27 +32,15 @@ const PuzzleScreen = () => {
 
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const puzzleId = parseInt(id); // vem como string
+  const puzzleId = typeof id === 'string' ? parseInt(id) : NaN;
 
-  const puzzles = [
-    { id: 1, question: 'O que é, o que é: Cai em pé e corre deitado?', answer: 'Chuva' },
-    { id: 2, question: 'Tem dentes mas não morde?', answer: 'Pente' },
-    { id: 3, question: 'Anda com os pés na cabeça?', answer: 'Piolho' },
-    { id: 4, question: 'Tem capa mas não é super-herói?', answer: 'Livro' },
-    { id: 5, question: 'Quanto mais tira, maior fica?', answer: 'Buraco' },
-    { id: 6, question: 'Qual é o animal que anda com um pau nas costas?', answer: 'Caramujo' },
-    { id: 7, question: 'O que é invisível e atrapalha a visão?', answer: 'Escuridão' },
-    { id: 8, question: 'Sempre molhado, mesmo secando?', answer: 'Toalha' },
-    { id: 9, question: 'O que nasce grande e morre pequeno?', answer: 'Lapis' },
-    { id: 10, question: 'Tem banco, mas não senta?', answer: 'Banco de dados' },
-  ];
 
   const puzzle = puzzles.find(p => p.id === puzzleId);
   const [text, setText] = useState('');
 
   const checkAnswer = async () => {
     const userAnswer = text.trim().toLowerCase();
-    const correctAnswer = puzzle.answer.trim().toLowerCase();
+    const correctAnswer = puzzle?.answer.trim().toLowerCase();
 
     if (userAnswer === correctAnswer) {
       const nextId = puzzleId + 1;
