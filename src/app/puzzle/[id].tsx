@@ -12,13 +12,25 @@ const PuzzleScreen = () => {
   const [isAllowed, setIsAllowed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const { id } = useLocalSearchParams();
+  const router = useRouter();
+  const puzzleId = typeof id === "string" ? parseInt(id) : NaN;
+
+  const puzzle = puzzles.find((p) => p.id === puzzleId);
+  const [text, setText] = useState("");
+
   // Verifica se o usuário pode acessar o puzzle
   // baseado no progresso salvo no AsyncStorage
   useEffect(() => {
     const checkProgress = async () => {
       try {
-        const value = await AsyncStorage.getItem("maxPuzzle");
+        let value = await AsyncStorage.getItem("maxPuzzle");
+        // if value is null or "0", set it to "1"
+        value = value === null || value === "0" ? "1" : value;
         const maxUnlocked = value ? parseInt(value) : 1;
+
+        console.log("Max Puzzle Unlocked:", maxUnlocked);
+        console.log("Current Puzzle ID:", puzzleId);
 
         if (puzzleId <= maxUnlocked) {
           setIsAllowed(true);
@@ -33,20 +45,13 @@ const PuzzleScreen = () => {
     checkProgress();
   }, []);
 
-  const { id } = useLocalSearchParams();
-  const router = useRouter();
-  const puzzleId = typeof id === "string" ? parseInt(id) : NaN;
-
-  const puzzle = puzzles.find((p) => p.id === puzzleId);
-  const [text, setText] = useState("");
-
   // Verifica se o puzzleId é válido
   const checkAnswer = async () => {
     const userAnswer = text.trim().toLowerCase();
     const correctAnswer = puzzle?.answer.trim().toLowerCase();
 
     if (userAnswer === correctAnswer) {
-      const nextId = puzzleId + 1;
+      const nextId = puzzleId;
       const hasNext = puzzles.some((p) => p.id === nextId);
       Alert.alert(
         "Certa resposta!",
