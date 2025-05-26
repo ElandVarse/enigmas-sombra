@@ -1,27 +1,30 @@
-import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
-import { styles } from '../../assets/style';
-import { Link, useLocalSearchParams, useRouter } from 'expo-router';
-import puzzles from '../../assets/puzzles';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { TextInput } from "react-native-gesture-handler";
+import { styles } from "../../assets/style";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import puzzles from "../../assets/puzzles";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PuzzleScreen = () => {
   const [isAllowed, setIsAllowed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Verifica se o usuário pode acessar o puzzle
+  // baseado no progresso salvo no AsyncStorage
   useEffect(() => {
     const checkProgress = async () => {
       try {
-        const value = await AsyncStorage.getItem('maxPuzzle');
+        const value = await AsyncStorage.getItem("maxPuzzle");
         const maxUnlocked = value ? parseInt(value) : 1;
 
         if (puzzleId <= maxUnlocked) {
           setIsAllowed(true);
         }
       } catch (e) {
-        console.error('Erro ao verificar progresso:', e);
+        console.error("Erro ao verificar progresso:", e);
       } finally {
         setIsLoading(false);
       }
@@ -32,35 +35,38 @@ const PuzzleScreen = () => {
 
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const puzzleId = typeof id === 'string' ? parseInt(id) : NaN;
+  const puzzleId = typeof id === "string" ? parseInt(id) : NaN;
 
+  const puzzle = puzzles.find((p) => p.id === puzzleId);
+  const [text, setText] = useState("");
 
-  const puzzle = puzzles.find(p => p.id === puzzleId);
-  const [text, setText] = useState('');
-
+  // Verifica se o puzzleId é válido
   const checkAnswer = async () => {
     const userAnswer = text.trim().toLowerCase();
     const correctAnswer = puzzle?.answer.trim().toLowerCase();
 
     if (userAnswer === correctAnswer) {
       const nextId = puzzleId + 1;
-      const hasNext = puzzles.some(p => p.id === nextId);
-      Alert.alert('Certa resposta!', hasNext ? 'Indo para o próximo enigma...' : 'Você concluiu todos!');
-      setText('');
+      const hasNext = puzzles.some((p) => p.id === nextId);
+      Alert.alert(
+        "Certa resposta!",
+        hasNext ? "Indo para o próximo enigma..." : "Você concluiu todos!"
+      );
+      setText("");
 
       try {
-        await AsyncStorage.setItem('maxPuzzle', String(nextId));
+        await AsyncStorage.setItem("maxPuzzle", String(nextId));
       } catch (e) {
-        console.error('Erro ao salvar progresso:', e);
+        console.error("Erro ao salvar progresso:", e);
       }
 
       if (hasNext) {
         router.push(`/puzzle/${nextId}`);
       } else {
-        router.push('/');
+        router.push("/");
       }
     } else {
-      Alert.alert('ERRADO', 'Tente novamente.');
+      Alert.alert("ERRADO", "Tente novamente.");
     }
   };
 
@@ -72,12 +78,13 @@ const PuzzleScreen = () => {
     );
   }
 
-
   if (!puzzle) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Enigma não encontrado 😢</Text>
-        <Link href="/" style={{ color: '#ffffff' }}>← Voltar</Link>
+        <Link href="/" style={{ color: "#ffffff" }}>
+          ← Voltar
+        </Link>
       </View>
     );
   }
@@ -85,9 +92,18 @@ const PuzzleScreen = () => {
   if (!isAllowed) {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>⛔<br /><br />Você não deveria estar aqui!</Text>
+        <Text style={styles.title}>
+          ⛔<br />
+          <br />
+          Você não deveria estar aqui!
+        </Text>
         <TouchableOpacity>
-          <Link href="/" style={{ color: '#ffffff', fontSize: 16, marginTop: 24 }}>← Voltar</Link>
+          <Link
+            href="/"
+            style={{ color: "#ffffff", fontSize: 16, marginTop: 24 }}
+          >
+            ← Voltar
+          </Link>
         </TouchableOpacity>
       </View>
     );
@@ -96,65 +112,73 @@ const PuzzleScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enigma Sombra</Text>
-        <View style={styleQuestion.puzzle}>
-          <Text style={styles.suggestMeText}>{puzzle.question}</Text>
-        </View>
+      <View style={styleQuestion.puzzle}>
+        <Text style={styles.suggestMeText}>{puzzle.question}</Text>
+      </View>
 
-        <View style={styles.suggestionBox}>
-          <TextInput
-            style={styleQuestion.input}
-            onChangeText={setText}
-            value={text}
-            placeholder="Digite sua resposta..."
-            placeholderTextColor="#888"
-          />
+      <View style={styles.suggestionBox}>
+        <TextInput
+          style={styleQuestion.input}
+          onChangeText={setText}
+          value={text}
+          placeholder="Digite sua resposta..."
+          placeholderTextColor="#888"
+        />
 
-          <TouchableOpacity style={styleQuestion.button} onPress={checkAnswer}>
-            <Text style={styleQuestion.buttonText}>Enviar</Text>
-          </TouchableOpacity>
-
+        <TouchableOpacity style={styleQuestion.button} onPress={checkAnswer}>
+          <Text style={styleQuestion.buttonText}>Enviar</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styleQuestion.back}>
-          <Link href="/" style={{ fontWeight: 'bold', color: '#ffffff', fontSize: 16, marginTop: 24 }}>{'<'} Voltar</Link>
+          <Link
+            href="/"
+            style={{
+              fontWeight: "bold",
+              color: "#ffffff",
+              fontSize: 16,
+              marginTop: 24,
+            }}
+          >
+            {"<"} Voltar
+          </Link>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
-
+};
 
 const styleQuestion = StyleSheet.create({
   container: {
     marginTop: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   back: {
     marginTop: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   button: {
-    backgroundColor: '#8F7535',
+    backgroundColor: "#8F7535",
     paddingVertical: 12,
     borderRadius: 8,
     marginTop: 10,
   },
   input: {
     height: 40,
-    width: '100%',
-    borderColor: '#8F7535',
+    width: "100%",
+    borderColor: "#8F7535",
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-    color: '#ffffff',
+    color: "#ffffff",
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    textAlign: "center",
   },
   puzzle: {
     borderRadius: 8,

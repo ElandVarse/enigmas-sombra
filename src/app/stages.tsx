@@ -1,11 +1,32 @@
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native'
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { Link, Stack } from 'expo-router';
 import styles from '../assets/style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const data = Array.from({ length: 9 }, (_, i) => (i + 1).toString());
 
 export default function Phases() {
+  const [maxPuzzle, setMaxPuzzle] = useState<number>(0); // valor inicial
+
+  useEffect(() => {
+    const getMaxPuzzle = async () => {
+      try {
+        const value = await AsyncStorage.getItem("maxPuzzle");
+        if (value !== null) {
+          setMaxPuzzle(parseInt(value));
+        }
+        else {
+          setMaxPuzzle(0);
+        }
+      } catch (e) {
+        console.error("Erro ao obter progresso:", e);
+      }
+    };
+
+    getMaxPuzzle();
+  }, []);
+
   return (
     <View style={stageStyles.container}>
       <View style={stageStyles.inner}>
@@ -20,11 +41,11 @@ export default function Phases() {
           renderItem={({ item, index }) => (
 
             <Link
-              style={index === 0 ? stageStyles.box : [stageStyles.box, stageStyles.lockedBox]}
-              href={index === 0 ? `/puzzle/${item}` : '/stages'}
+              style={index <= maxPuzzle ? stageStyles.box : [stageStyles.box, stageStyles.lockedBox]}
+              href={index <= maxPuzzle ? `/puzzle/${item}` : '/stages'}
             >
 
-              {index === 0 ? (
+              {index <= maxPuzzle ? (
                 <Text style={stageStyles.text}>{item}</Text>
               ) : (
                 <Image

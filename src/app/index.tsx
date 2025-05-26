@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import QuestionMark from '@/assets/images/question-mark';
 import { Link, useRouter } from 'expo-router';
 import {styles} from '../app/../assets/style'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
   const [suggestion, setSuggestion] = useState("")
   const router = useRouter();
+
+  // reset async storage
+  // useEffect(() => { 
+  //   const resetarAsyncStorage = async () => {
+  //     try {
+  //       await AsyncStorage.setItem("maxPuzzle", String(0));
+  //     } catch (e) {
+  //       console.error("Erro ao salvar progresso:", e);
+  //     }
+  // };
+
+  // resetarAsyncStorage()
+  
+  // })
 
   return (
 
