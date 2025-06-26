@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import QuestionMark from '@/assets/images/question-mark';
+import QuestionMark from '@/src/assets/question-mark';
 import { Link, useRouter } from 'expo-router';
 import {styles} from '../app/../assets/style'
 
