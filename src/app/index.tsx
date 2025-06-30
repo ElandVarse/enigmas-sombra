@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import QuestionMark from '@/src/assets/question-mark';
+import QuestionMark from '@/src/assets/QuestionMark';
 import { Link, useRouter } from 'expo-router';
-import {styles} from '../app/../assets/style'
+import {styles} from '../assets/GlobalStyles'
 
 
 const Index = () => {
@@ -26,11 +26,11 @@ const Index = () => {
           <Text style={styles.suggestionButtonText}>Iniciar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/stages')}>
+        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/Stages')}>
           <Text style={styles.suggestionButtonText}>Fases</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/instructions')}>
+        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/Instructions')}>
           <Text style={styles.suggestionButtonText}>Instruções</Text>
         </TouchableOpacity>
       </View>

@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Alert,
-  Image,
-  Modal,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Alert, Image, Modal, Pressable } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { styles } from "../../assets/style";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
-import puzzles from "../../assets/puzzles";
-import Lightbulb from "../../assets/images/lightbulb";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
+
+import Lightbulb from "../../assets/images/lightbulb";
+import puzzles from "../../assets/Puzzles";
+
+import { styles } from "../../assets/GlobalStyles";
+import PuzzleStyle from "./PuzzleStyles";
 
 const PuzzleScreen = () => {
   // Modal logic
@@ -134,7 +127,7 @@ const PuzzleScreen = () => {
   // Renderiza o enigma se todas as condições forem atendidas
   return (
     <View style={styles.container}>
-      <View style={styleQuestion.tipContainer}>
+      <View style={PuzzleStyle.tipContainer}>
         <Pressable onPress={() => setModalVisible(true)}>
           <Lightbulb />
         </Pressable>
@@ -146,11 +139,11 @@ const PuzzleScreen = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{randomTip}</Text>
+        <View style={PuzzleStyle.modalOverlay}>
+          <View style={PuzzleStyle.modalContent}>
+            <Text style={PuzzleStyle.modalText}>{randomTip}</Text>
             <Pressable
-              style={styles.closeButton}
+              style={PuzzleStyle.closeButton}
               onPress={() => setModalVisible(false)}
             >
               <Text style={{ color: "#fff" }}>Fechar</Text>
@@ -160,24 +153,24 @@ const PuzzleScreen = () => {
       </Modal>
 
       <Text style={styles.title}>Enigma Sombra</Text>
-      <View style={styleQuestion.puzzle}>
+      <View style={PuzzleStyle.puzzle}>
         <Text style={styles.suggestMeText}>{puzzle.question}</Text>
       </View>
 
       <View style={styles.suggestionBox}>
         <TextInput
-          style={styleQuestion.input}
+          style={PuzzleStyle.input}
           onChangeText={setText}
           value={text}
           placeholder="Digite sua resposta..."
           placeholderTextColor="#888"
         />
 
-        <TouchableOpacity style={styleQuestion.button} onPress={checkAnswer}>
-          <Text style={styleQuestion.buttonText}>Enviar</Text>
+        <TouchableOpacity style={PuzzleStyle.button} onPress={checkAnswer}>
+          <Text style={PuzzleStyle.buttonText}>Enviar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styleQuestion.back}>
+        <TouchableOpacity style={PuzzleStyle.back}>
           <Link
             href="/"
             style={{
@@ -194,76 +187,5 @@ const PuzzleScreen = () => {
     </View>
   );
 };
-
-const styleQuestion = StyleSheet.create({
-  container: {
-    marginTop: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  tipContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    top: 20,
-    right: 20,
-  },
-  back: {
-    marginTop: 16,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    backgroundColor: "#8F7535",
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 10,
-  },
-  input: {
-    height: 40,
-    width: "100%",
-    borderColor: "#8F7535",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    color: "#ffffff",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    textAlign: "center",
-  },
-  puzzle: {
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  // Modal styles
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    backgroundColor: "#fff",
-    padding: 24,
-    borderRadius: 16,
-    maxWidth: "80%",
-    alignItems: "center",
-  },
-  modalText: {
-    fontSize: 16,
-    marginBottom: 16,
-    textAlign: "center",
-  },
-  closeButton: {
-    backgroundColor: "#333",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-  },
-});
 
 export default PuzzleScreen;

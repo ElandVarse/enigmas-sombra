@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
 
-import styles from '../assets/style'
+import styles from '../assets/GlobalStyles'
 import { ContinousBaseGesture } from 'react-native-gesture-handler/lib/typescript/handlers/gestures/gesture'
 import { Link } from 'expo-router'
 
