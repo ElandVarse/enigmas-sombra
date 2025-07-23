@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { Component } from 'react'
 
-import styles from '../assets/style'
+import styles from '../../assets/GlobalStyles'
 import { ContinousBaseGesture } from 'react-native-gesture-handler/lib/typescript/handlers/gestures/gesture'
 import { Link } from 'expo-router'
 
@@ -15,7 +15,7 @@ export default class instructions extends Component {
           <Text style={instructionStyles.text}>Se estiver muito difícil, tente pedir uma dica</Text>
 
           <Image
-            source={require('../assets/images/frieren.gif')}
+            source={require('../../assets/images/frieren.gif')}
             style={{ width: 200, height: 140, marginTop: 20 }}
           />
 
