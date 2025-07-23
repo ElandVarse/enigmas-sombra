@@ -4,25 +4,13 @@ import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 
-import Lightbulb from "../../assets/images/lightbulb";
 import puzzles from "../../assets/Puzzles";
 
 import { styles } from "../../assets/GlobalStyles";
 import PuzzleStyle from "./PuzzleStyles";
+import AskForATip from "../components/AskForATip";
 
 const PuzzleScreen = () => {
-  // Modal logic
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const randomTips = [
-    "Você sabia que pode usar useMemo pra otimizar renderizações?",
-    "A prática leva à perfeição!",
-    "Não esqueça de fazer commit!",
-    "Erros são parte do processo.",
-    "Experimente algo novo hoje.",
-  ];
-
-  const randomTip = randomTips[Math.floor(Math.random() * randomTips.length)];
 
   // Estado para controlar se o usuário tem permissão para acessar o enigma
   const [isAllowed, setIsAllowed] = useState(false);
@@ -127,30 +115,7 @@ const PuzzleScreen = () => {
   // Renderiza o enigma se todas as condições forem atendidas
   return (
     <View style={styles.container}>
-      <View style={PuzzleStyle.tipContainer}>
-        <Pressable onPress={() => setModalVisible(true)}>
-          <Lightbulb />
-        </Pressable>
-      </View>
-
-      <Modal
-        transparent
-        animationType="fade"
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={PuzzleStyle.modalOverlay}>
-          <View style={PuzzleStyle.modalContent}>
-            <Text style={PuzzleStyle.modalText}>{randomTip}</Text>
-            <Pressable
-              style={PuzzleStyle.closeButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={{ color: "#fff" }}>Fechar</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+      <AskForATip />
 
       <Text style={styles.title}>Enigma Sombra</Text>
       <View style={PuzzleStyle.puzzle}>

@@ -6,13 +6,7 @@ export const PuzzleStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  tipContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    top: 20,
-    right: 20,
-  },
+
   back: {
     marginTop: 16,
     alignItems: "center",
@@ -43,31 +37,6 @@ export const PuzzleStyle = StyleSheet.create({
   puzzle: {
     borderRadius: 8,
     marginBottom: 20,
-  },
-  // Modal styles
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    backgroundColor: "#fff",
-    padding: 24,
-    borderRadius: 16,
-    maxWidth: "80%",
-    alignItems: "center",
-  },
-  modalText: {
-    fontSize: 16,
-    marginBottom: 16,
-    textAlign: "center",
-  },
-  closeButton: {
-    backgroundColor: "#333",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
   },
 });
 

@@ -26,11 +26,11 @@ const Index = () => {
           <Text style={styles.suggestionButtonText}>Iniciar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/Stages')}>
+        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/screens/Stages')}>
           <Text style={styles.suggestionButtonText}>Fases</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/Instructions')}>
+        <TouchableOpacity style={styles.suggestionButton} onPress={() => router.push('/screens/Instructions')}>
           <Text style={styles.suggestionButtonText}>Instruções</Text>
         </TouchableOpacity>
       </View>
