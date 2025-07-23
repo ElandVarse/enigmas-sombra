@@ -4,11 +4,11 @@ import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 
-import puzzles from "../../assets/Puzzles";
+import puzzles from "../../../assets/Puzzles";
 
-import { styles } from "../../assets/GlobalStyles";
+import { styles } from "../../../assets/GlobalStyles";
 import PuzzleStyle from "./PuzzleStyles";
-import AskForATip from "../components/AskForATip";
+import AskForATip from "../../components/AskForATip";
 
 const PuzzleScreen = () => {
 
@@ -64,7 +64,7 @@ const PuzzleScreen = () => {
       }
 
       if (hasNext) {
-        router.push(`/puzzle/${nextId}`);
+        router.push(`/screens/puzzle/${nextId}`);
       } else {
         router.push("/");
       }
@@ -115,7 +115,7 @@ const PuzzleScreen = () => {
   // Renderiza o enigma se todas as condições forem atendidas
   return (
     <View style={styles.container}>
-      <AskForATip />
+      <AskForATip id={puzzleId} />
 
       <Text style={styles.title}>Enigma Sombra</Text>
       <View style={PuzzleStyle.puzzle}>

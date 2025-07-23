@@ -22,7 +22,7 @@ const Index = () => {
 
         <Text style={styles.title}>Enigma Sombra</Text>
 
-        <TouchableOpacity onPress={() => router.push('/puzzle/1')} style={styles.suggestionButton} >
+        <TouchableOpacity onPress={() => router.push('/screens/puzzle/1')} style={styles.suggestionButton} >
           <Text style={styles.suggestionButtonText}>Iniciar</Text>
         </TouchableOpacity>
 

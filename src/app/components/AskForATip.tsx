@@ -1,28 +1,20 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Modal,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
+import React, { useState } from "react";
+import { View, Text, Modal, Pressable, StyleSheet } from "react-native";
+
+import puzzles from "../../assets/Puzzles";
 
 import Lightbulb from "../../assets/images/lightbulb";
 
+type AskForATipProps = {
+  id: number | string;
+};
 
-const AskForATip: React.FC = () => {
+const AskForATip = ({ id }: AskForATipProps) => {
+  const puzzleId = id;
+  const puzzle = puzzles.find((p) => p.id === puzzleId);
+
   // Modal logic
   const [modalVisible, setModalVisible] = useState(false);
-
-  const randomTips = [
-    'Você sabia que pode usar useMemo pra otimizar renderizações?',
-    'A prática leva à perfeição!',
-    'Não esqueça de fazer commit!',
-    'Erros são parte do processo.',
-    'Experimente algo novo hoje.',
-  ];
-
-  const randomTip = randomTips[Math.floor(Math.random() * randomTips.length)];
 
   return (
     <>
@@ -40,12 +32,16 @@ const AskForATip: React.FC = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{randomTip}</Text>
+            {puzzle ? (
+              <Text style={styles.modalText}>{puzzle.tip}</Text>
+            ) : (
+              <Text style={styles.modalText}>Dica não encontrada</Text>
+            )}
             <Pressable
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={{ color: '#fff' }}>Fechar</Text>
+              <Text style={{ color: "#fff" }}>Fechar</Text>
             </Pressable>
           </View>
         </View>
@@ -58,32 +54,32 @@ export default AskForATip;
 
 const styles = StyleSheet.create({
   tipContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
     top: 20,
     right: 20,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 24,
     borderRadius: 16,
-    maxWidth: '80%',
-    alignItems: 'center',
+    maxWidth: "80%",
+    alignItems: "center",
   },
   modalText: {
     fontSize: 16,
     marginBottom: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
   closeButton: {
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
