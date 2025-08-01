@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, Modal, Pressable, StyleSheet } from "react-native";
 
-import puzzles from "../../assets/Puzzles";
-
-import Lightbulb from "../../assets/images/lightbulb";
+import puzzles from "@assets/Puzzles";
+import Lightbulb from "@assets/Lightbulb"; // Adjust the import path as necessary
 
 type AskForATipProps = {
   id: number | string;

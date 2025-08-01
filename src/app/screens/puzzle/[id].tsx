@@ -4,9 +4,9 @@ import { TextInput } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 
-import puzzles from "../../../assets/Puzzles";
+import puzzles from "../../assets/Puzzles";
 
-import { styles } from "../../../assets/GlobalStyles";
+import { styles } from "../../assets/styles/GlobalStyles";
 import PuzzleStyle from "./PuzzleStyles";
 import AskForATip from "../../components/AskForATip";
 

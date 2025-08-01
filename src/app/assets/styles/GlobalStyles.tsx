@@ -4,14 +4,21 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     input: {
       backgroundColor: '#fff',
-      outlineStyle: 'none',
-      outline:'none'
+      height: 40,
+      borderWidth: 1,
+      padding: 10,
+      width: '100%',
+      borderRadius: 4,
+      borderColor: '#888',
+      fontWeight: 'bold',
+      color: '#000',
     },
     marginBottom: {
       marginBottom: 8,
     },
     container: {
       backgroundColor: '#111',
+      backgroundImage: 'asset:/images/dark-texture.jpg',
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
@@ -29,13 +36,7 @@ export const styles = StyleSheet.create({
       borderRadius: 75,
       
       elevation: 5,
-      shadowColor: '#000000',
-      shadowOffset: {
-        width: 8,
-        height: 8,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
+      boxShadow: '8px 8px 3.84px rgba(0, 0, 0, 0.25)',
 
       position: 'absolute',
       top: 90,
@@ -48,17 +49,6 @@ export const styles = StyleSheet.create({
     },
     suggestionBox: {
       width: '80%',
-    },
-    input: {
-      height: 40,
-      borderWidth: 1,
-      padding: 10,
-      width: '100%',
-      backgroundColor: 'white',
-      borderRadius: 4,
-      borderColor: '#888',
-      fontWeight: 'bold',
-      color: '#000',
     },
     suggestMeText: {
       color: '#ffffff',

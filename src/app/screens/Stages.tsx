@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native'
 import React, { Component } from 'react'
 import { Link, Stack } from 'expo-router';
-import styles from '../../assets/GlobalStyles';
+import styles from '../assets/styles/GlobalStyles';
 
 const data = Array.from({ length: 9 }, (_, i) => (i + 1).toString());
 
@@ -28,7 +28,7 @@ export default function Phases() {
                 <Text style={stageStyles.text}>{item}</Text>
               ) : (
                 <Image
-                  source={require('../../assets/images/lock.png')}
+                  source={require('@images/lock.png')}
                   style={stageStyles.lock}
                 />
               )}
@@ -72,10 +72,6 @@ const stageStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-
-    textShadowColor: '#b08d32',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
   },
   grid: {
     alignItems: 'center',

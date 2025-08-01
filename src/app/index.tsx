@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import QuestionMark from '@/src/assets/QuestionMark';
+import QuestionMark from '@assets/QuestionMark';
 import { Link, useRouter } from 'expo-router';
-import {styles} from '../assets/GlobalStyles'
+import {styles} from './assets/styles/GlobalStyles'
 
 
 const Index = () => {
